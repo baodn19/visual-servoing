@@ -55,7 +55,7 @@
   </joint>
 
   <gazebo reference="camera_link">
-    <sensor name="ur5_camera" type="camera">
+    <sensor name="ur5e_camera" type="camera">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>30</update_rate>
