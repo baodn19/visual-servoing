@@ -15,10 +15,13 @@ def generate_launch_description():
     # Result: .../install/ur5e_description/share/ur5e_description
     pkg_share = get_package_share_directory(package_name)
     
-    # Process Xacro
+    # Process xacro file to generate robot description
     xacro_path = os.path.join(pkg_share, 'urdf', xacro_file_name)
+    robot_description_config = ParameterValue(
+        Command(['xacro ', xacro_path]), 
+        value_type=str
+    )
     
-    # --- FIX START ---
     # We want the parent folder of 'ur5e_description' so Gazebo can resolve 'model://ur5e_description'
     # pkg_share points to: .../share/ur5e_description
     # os.path.dirname gives: .../share
@@ -27,13 +30,6 @@ def generate_launch_description():
     set_gz_resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
         value=install_dir
-    )
-    # --- FIX END ---
-
-    # Robot Description
-    robot_description_config = ParameterValue(
-        Command(['xacro ', xacro_path]), 
-        value_type=str
     )
     
     # Nodes
@@ -44,6 +40,7 @@ def generate_launch_description():
         parameters=[{'robot_description': robot_description_config}]
     )
 
+    # Custom Gazebo World
     world_path = os.path.join(pkg_share, 'worlds', 'ur5e_world.sdf')
     
     gazebo = IncludeLaunchDescription(
@@ -61,6 +58,7 @@ def generate_launch_description():
         output='screen'
     )
 
+    # use `ros_gz_bridge` to map the Gazebo topic `camera/image_raw` to the ROS topic `/camera/image_raw`
     node_ros_gz_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
