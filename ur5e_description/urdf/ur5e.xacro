@@ -22,6 +22,15 @@
   <xacro:include filename="$(find ur5e_description)/urdf/inc/ur5e_macro.xacro"/>
   <xacro:ur5e_robot prefix="" />
 
+  <!--Anchor the base_link to the ground (world) with an offset of -0.1 to create contact with the ground -->
+  <link name="world"/>
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+  </joint>
+
   <!--Add camera link (camera_link) to end effector (tool0) -->
   <link name="camera_link">
     <visual>
