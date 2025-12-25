@@ -1,2 +1,3 @@
 # mycobot_ros2 #
-This is a metapackage
+
+myCobot series robots by Elephant Robotics (metapackage).
