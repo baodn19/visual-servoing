@@ -44,7 +44,7 @@ def process_ros2_controllers_config(context):
     # Define both source and install paths
     src_config_path = os.path.join(
         home,
-        'ros2_ws/src/visual-servoing/mycobot_ros2/mycobot_moveit_config/config',
+        'ros2_ws/src/pick-and-place-manipulator/mycobot_ros2/mycobot_moveit_config/config',
         robot_name
     )
     install_config_path = os.path.join(
